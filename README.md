@@ -1,22 +1,36 @@
 # RetroPie Status Overlay
 Based on [gbz_overlay](https://github.com/d-rez/gbz_overlay) script by [d-rez](https://github.com/d-rez)
 
+![Pylint](https://github.com/bverc/retropie-status-overlay/actions/workflows/pylint.yml/badge.svg)
+![unittest](https://github.com/bverc/retropie-status-overlay/actions/workflows/unittest.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/bverc/retropie-status-overlay/badge.svg)](https://coveralls.io/github/bverc/retropie-status-overlay)
+
 This repository contains a script to display status icons on top of your RetroPie games and emulationstation menus
 
 ![Bluetooth, wifi connected, audio on](_images/240_icons.png)
 
 ## Features
-- display battery level (Requires appropiate Hardware, currently supports GPIO Low Voltage, MCP and ADS1 chips)
-- display WiFi state (connected/disconnected/disabled)
-- display Bluetooth state (connected/disconnected/disabled)
-- display under-voltage state
-- display warning if frequency-capped
-- display warning if throttling
+- display battery level (Requires appropiate Hardware)
+- display WiFi state
+- display Bluetooth state
+- display Audio state
+- display warning if under voltage, frequency-capped or throttling
 - gracefully shut down the Pi after 60s from when voltage goes below 3.2V of low voltage detected (abort shutdown when power is restored)
 - show a big imminent shutdown warning when the counter starts ticking
 - Set icon transparency while in game
 - Shutdown from button press
 - Custom icon colours
+
+## Battery Level Detection Support
+- Low Voltage GPIO
+- Texas Instruments ADS1015/ADS1115 (Also available as Adafruit breakout board)
+- Microchip MCP3008
+- PiJuice HAT / PiJuice Zero
+- PiSugar ([requires testing](https://github.com/bverc/retropie-status-overlay/issues/22))
+- Serial interface (such as Arduino)
+- Simple plugin system to add your own ADC / Battery monitor
+
+Read how to configure battery detection for your setup at [adc/README.md](https://github.com/bverc/retropie-status-overlay/tree/master/adc).
 
 ## More Screenshots
 ![Overlay on TFT theme at 240p](_images/240_allicons.png)  
@@ -59,14 +73,13 @@ SSH into your device, or access the terminal using F4.
 ```bash
 mkdir ~/src
 cd ~/src
-git clone https://github.com/bverc/raspidmx
+git clone https://github.com/AndrewFromMelbourne/raspidmx
 cd raspidmx/lib
 make
 cd ../pngview
 make
 sudo cp pngview /usr/local/bin/
  ```
-  Note: AndrewFromMelbourne/raspidmx has been replaced with bverc/raspidmx due to added features required by retropie-status-overlay. Will be changed back pending [pull request](https://github.com/AndrewFromMelbourne/raspidmx/pull/31).
   
 ## Run RetroPie Status Overlay
 Install psutil module:
